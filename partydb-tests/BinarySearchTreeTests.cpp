@@ -26,6 +26,11 @@ namespace partydbtests
 			tree.insert(6);
 			Assert::AreEqual(3, tree.getNodeCount());
 			Assert::AreEqual(2, tree.getHeight());
+
+			tree.clear();
+			Assert::IsTrue(tree.isEmpty());
+			Assert::AreEqual(0, tree.getHeight());
+			Assert::AreEqual(0, tree.getNodeCount());
 		}
 
 	};

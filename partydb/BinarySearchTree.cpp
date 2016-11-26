@@ -9,22 +9,12 @@
 #include "BinarySearchTree.h"
 #endif
 
+// Utility method
+
 template <typename T>
 T max(const T& x, const T& y)
 {
 	return (x > y) ? x : y;
-}
-
-template <typename Data>
-BinarySearchTree<Data>::BinarySearchTree()
-	: root(nullptr)
-	, node_count(0)
-{
-}
-
-template <typename Data>
-BinarySearchTree<Data>::~BinarySearchTree()
-{
 }
 
 // Protected methods
@@ -38,9 +28,35 @@ int BinarySearchTree<Data>::recursivelyGetHeight(TreeNode<int>* sub_tree) const
 }
 
 template <typename Data>
-void BinarySearchTree<Data>::deleteTree(BinarySearchTree<Data>* sub_tree);
+void BinarySearchTree<Data>::deleteTree(TreeNode<Data>* sub_tree)
+{
+	if (sub_tree == nullptr) {
+		return;
+	}
+	else {
+		deleteTree(sub_tree->getLeft());
+		deleteTree(sub_tree->getRight());
+
+		delete sub_tree;
+		sub_tree = nullptr;
+		node_count--;
+	}
+}
 
 //Public functions
+
+template <typename Data>
+BinarySearchTree<Data>::BinarySearchTree()
+	: root(nullptr)
+	, node_count(0)
+{
+}
+
+template <typename Data>
+BinarySearchTree<Data>::~BinarySearchTree()
+{
+	clear();
+}
 
 template <typename Data>
 bool BinarySearchTree<Data>::isEmpty() const
@@ -113,7 +129,11 @@ template <typename Data>
 void BinarySearchTree<Data>::remove(const Data& target);
 
 template <typename Data>
-void BinarySearchTree<Data>::clear();
+void BinarySearchTree<Data>::clear()
+{
+	deleteTree(root);
+	root = nullptr; // Must set this or else it will be junk address.
+}
 
 template <typename Data>
 bool BinarySearchTree<Data>::contains(const Data& target);

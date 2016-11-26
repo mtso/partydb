@@ -24,7 +24,7 @@ protected:
 
 	int recursivelyGetHeight(TreeNode<int>* sub_tree) const;
 
-	void deleteTree(BinarySearchTree<Data>* sub_tree);
+	void deleteTree(TreeNode<Data>* sub_tree);
 
 public:
 
