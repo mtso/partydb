@@ -26,6 +26,22 @@ namespace partydbtests
 			tree.insert(6);
 			Assert::AreEqual(3, tree.getNodeCount());
 			Assert::AreEqual(2, tree.getHeight());
+			Assert::AreEqual(6, tree.getData(6));
+
+			Assert::IsFalse(tree.contains(5));
+			Assert::IsFalse(tree.contains(-1));
+			Assert::IsTrue(tree.contains(4));
+			Assert::IsTrue(tree.contains(2));
+			Assert::IsTrue(tree.contains(6));
+			Assert::IsFalse(tree.contains(5));
+
+			try {
+				int data = tree.getData(5);
+			}
+			catch (BinarySearchTree<int>::NotFoundException error) {
+				char* expected = "getData() could not find the target.";
+				Assert::AreEqual(expected, error.getDescription());
+			}
 
 			tree.clear();
 			Assert::IsTrue(tree.isEmpty());

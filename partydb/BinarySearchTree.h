@@ -26,7 +26,18 @@ protected:
 
 	void deleteTree(TreeNode<Data>* sub_tree);
 
+	TreeNode<Data>* find(const Data& target, TreeNode<Data>* sub_tree) const;
+
 public:
+
+	class NotFoundException
+	{
+	private:
+		char* description;
+	public:
+		NotFoundException(char* message = "getData() could not find the target.") : description(message) {}
+		char* getDescription() const { return description; }
+	};
 
 	BinarySearchTree();
 

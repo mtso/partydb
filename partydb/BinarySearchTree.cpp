@@ -43,6 +43,22 @@ void BinarySearchTree<Data>::deleteTree(TreeNode<Data>* sub_tree)
 	}
 }
 
+template <typename Data>
+TreeNode<Data>* BinarySearchTree<Data>::find(const Data& target, TreeNode<Data>* sub_tree) const
+{
+	if (sub_tree == nullptr) {
+		return sub_tree;
+	}
+	else if (sub_tree->getData() == target) {
+		return sub_tree;
+	}
+	else {
+		TreeNode<Data>* left = find(target, sub_tree->getLeft());
+		TreeNode<Data>* right = find(target, sub_tree->getRight());
+		return (left != nullptr) ? left : right;
+	}
+}
+
 //Public functions
 
 template <typename Data>
@@ -136,9 +152,16 @@ void BinarySearchTree<Data>::clear()
 }
 
 template <typename Data>
-bool BinarySearchTree<Data>::contains(const Data& target);
+bool BinarySearchTree<Data>::contains(const Data& target) 
+{
+	return find(target, root) != nullptr;
+}
 
 template <typename Data>
-Data BinarySearchTree<Data>::getData(const Data& target);
+Data BinarySearchTree<Data>::getData(const Data& target)
+{
+	TreeNode<Data>* search = find(target, root);
+	return (search != nullptr) ? search->getData() : throw NotFoundException();
+}
 
 #endif
