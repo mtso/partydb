@@ -25,6 +25,12 @@ TreeNode<Data>::TreeNode(const Data& new_data,
 }
 
 template <typename Data>
+bool TreeNode<Data>::isLeaf() const
+{
+	return right == nullptr && left == nullptr;
+}
+
+template <typename Data>
 Data TreeNode<Data>::getData() const
 {
 	return data;

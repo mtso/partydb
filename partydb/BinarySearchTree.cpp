@@ -1,3 +1,6 @@
+// BinarySearchTree.cpp
+// Lab 4: partydb
+// CIS 22C F2016: Matthew Tso
 
 #ifndef PARTYDB_BINARYSEARCHTREE_CPP
 #define PARTYDB_BINARYSEARCHTREE_CPP
@@ -5,6 +8,12 @@
 #ifndef PARTYDB_BINARYSEARCHTREE_H
 #include "BinarySearchTree.h"
 #endif
+
+template <typename T>
+T max(const T& x, const T& y)
+{
+	return (x > y) ? x : y;
+}
 
 template <typename Data>
 BinarySearchTree<Data>::BinarySearchTree()
@@ -18,6 +27,21 @@ BinarySearchTree<Data>::~BinarySearchTree()
 {
 }
 
+// Protected methods
+
+template <typename Data>
+int BinarySearchTree<Data>::recursivelyGetHeight(TreeNode<int>* sub_tree) const
+{
+	return sub_tree == nullptr ?
+		0 : 1 + max(recursivelyGetHeight(sub_tree->getLeft()), 
+		            recursivelyGetHeight(sub_tree->getRight()));
+}
+
+template <typename Data>
+void BinarySearchTree<Data>::deleteTree(BinarySearchTree<Data>* sub_tree);
+
+//Public functions
+
 template <typename Data>
 bool BinarySearchTree<Data>::isEmpty() const
 {
@@ -25,7 +49,10 @@ bool BinarySearchTree<Data>::isEmpty() const
 }
 
 template <typename Data>
-int BinarySearchTree<Data>::getHeight() const;
+int BinarySearchTree<Data>::getHeight() const
+{
+	return recursivelyGetHeight(root);
+}
 
 template <typename Data>
 int BinarySearchTree<Data>::getNodeCount() const
@@ -46,7 +73,33 @@ template <typename Data>
 void BinarySearchTree<Data>::setRootData(const Data& new_data);
 
 template <typename Data>
-void BinarySearchTree<Data>::insert(const Data& new_data);
+void BinarySearchTree<Data>::insert(const Data& new_data)
+{
+	TreeNode<Data>* search = root;
+
+	while (search != nullptr) 
+	{
+		if (search->getData() > new_data) 
+		{
+			if (search->getLeft() == nullptr) {
+				search->setLeft(new TreeNode<Data>(new_data));
+				node_count++;
+				return;
+			}
+			search = search->getLeft();
+		}
+		else {
+			if (search->getRight() == nullptr) {
+				search->setRight(new TreeNode<Data>(new_data));
+				node_count++;
+				return;
+			}
+			search = search->getRight();
+		}
+	}
+	root = new TreeNode<Data>(new_data);
+	node_count++;
+}
 
 template <typename Data>
 void BinarySearchTree<Data>::remove(const Data& target);

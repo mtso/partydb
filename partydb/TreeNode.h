@@ -14,10 +14,11 @@ private:
 
 public:
 	TreeNode(const TreeNode<Data>& original);
-
 	TreeNode(const Data& new_data, 
 		TreeNode<Data>* new_left = nullptr, 
 		TreeNode<Data>* new_right = nullptr);
+
+	bool isLeaf() const;
 
 	Data getData() const;
 	void setData(const Data& new_data);
