@@ -30,6 +30,9 @@ protected:
 
 public:
 
+	/**
+	 * Thrown by getData() and remove() when find(target,sub_tree) cannot find the target.
+	 */
 	class NotFoundException
 	{
 	private:
@@ -39,28 +42,66 @@ public:
 		char* getDescription() const { return description; }
 	};
 
+	/**
+	 * Initializes root to nullptr and node_count to 0
+	 */
 	BinarySearchTree();
 
+	/**
+	 * clears the tree upon deconstruction
+	 */
 	~BinarySearchTree();
 
+	/**
+	 * True if the tree contains no nodes
+	 * Returns root == nullptr
+	 */
 	bool isEmpty() const;
 
+	/**
+	 * Returns the tree height
+	 */
 	int getHeight() const;
 
+	/**
+	 * Returns node_count
+	 */
 	int getNodeCount() const;
 
+	/**
+	 * Returns the root's data
+	 */
 	Data getRootData() const;
 
+	/**
+	 * Set's root's data
+	 */
 	void setRootData(const Data& new_data);
 
+	/**
+	 * Inserts a new node into the tree
+	 */
 	void insert(const Data& new_data);
 
+	/**
+	 * TODO: Searches for a node with data that matches the target
+	 * and then removes the node.
+	 */
 	void remove(const Data& target);
 
+	/**
+	 * Recursively deletes nodes from the tree
+	 */
 	void clear();
 
+	/**
+	 * True if the tree contains a node with data that matches the target
+	 */
 	bool contains(const Data& target);
 
+	/**
+	 * Returns the found node's data
+	 */
 	Data getData(const Data& target);
 };
 
