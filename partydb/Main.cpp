@@ -4,6 +4,7 @@ using namespace std;
 
 #include "BinarySearchTree.h"
 #include "TreeNode.h"
+#include "Person.h"
 
 int main()
 {
@@ -32,6 +33,10 @@ int main()
 	tree.clear();
 
 	cout << tree.getNodeCount() << endl;
+
+	Birthdate test_date = Birthdate(11, 13, 1928);
+	string test_name = "Mickey";
+	Person mickey = Person(test_date, test_name);
 
 	system("pause");
 	return 0;
