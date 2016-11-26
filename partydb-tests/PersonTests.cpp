@@ -21,6 +21,7 @@ namespace partydbtests
 
 			Assert::AreEqual(test_date.getMonth(), mickey.getBirthday().getMonth());
 			Assert::AreEqual(test_date.getDay(), mickey.getBirthday().getDay());
+			Assert::AreEqual(test_date.getYear(), mickey.getBirthday().getYear());
 			Assert::AreEqual(test_name, mickey.getName());
 		}
 
