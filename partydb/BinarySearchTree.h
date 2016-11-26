@@ -14,18 +14,36 @@ template <typename Data>
 class BinarySearchTree
 {
 private:
+	/** Pointer to the root node */
 	TreeNode<Data>* root;
 
+	/** 
+	 * number of nodes that is:
+	 * incremented by insert() 
+	 * decremented by remove(), clear(), deleteTree()
+	 */
 	int node_count;
 
 protected:
 	// Helper functions
-	// Recursive functions here operate on pointers to parent nodes
+	// Recursive functions here operate on pointers to sub_trees through their parent nodes
 
+	/**
+	 * Returns the height of the tree, 
+	 * each node that is not nullptr increments the result of their branch
+	 */
 	int recursivelyGetHeight(TreeNode<int>* sub_tree) const;
 
+	/**
+	 * Deletes a subtree
+	 */
 	void deleteTree(TreeNode<Data>* sub_tree);
-
+	
+	/**
+	 * Searches for a node with data that matches its target
+	 * @param target `Data` to match
+	 * @param sub_tree parent node pointer
+	 */
 	TreeNode<Data>* find(const Data& target, TreeNode<Data>* sub_tree) const;
 
 public:
