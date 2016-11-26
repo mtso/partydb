@@ -2,10 +2,10 @@
 #ifndef PARTYDB_TREENODE_H
 #define PARTYDB_TREENODE_H
 
-#include "Node.h"
+//#include "Node.h"
 
 template <typename Data>
-class TreeNode //: protected Node<Data>
+class TreeNode
 {
 private:
 	TreeNode<Data>* left;
@@ -13,11 +13,11 @@ private:
 	Data data;
 
 public:
-	TreeNode<Data>(const TreeNode<Data>& original);
+	TreeNode(const TreeNode<Data>& original);
 
-	TreeNode<Data>(const Data& new_data, 
-		const TreeNode<Data>* new_left = nullptr, 
-		const TreeNode<Data>* new_right = nullptr);
+	TreeNode(const Data& new_data, 
+		TreeNode<Data>* new_left = nullptr, 
+		TreeNode<Data>* new_right = nullptr);
 
 	Data getData() const;
 	void setData(const Data& new_data);
@@ -25,12 +25,12 @@ public:
 	TreeNode<Data>* getLeft() const;
 	TreeNode<Data>* getRight() const;
 
-	void setLeft(const TreeNode<Data>* new_left);
-	void setRight(const TreeNode<Data>* new_right);
+	void setLeft(TreeNode<Data>* new_left);
+	void setRight(TreeNode<Data>* new_right);
 
 };
 
-#ifndef PARTYDB_TREENODE_H
+#ifndef PARTYDB_TREENODE_CPP
 #include "TreeNode.cpp"
 #endif
 

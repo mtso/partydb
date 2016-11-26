@@ -1,5 +1,10 @@
 
+#ifndef PARTYDB_TREENODE_CPP
+#define PARTYDB_TREENODE_CPP
+
+#ifndef PARTYDB_TREENODE_H
 #include "TreeNode.h"
+#endif
 
 template <typename Data>
 TreeNode<Data>::TreeNode(const TreeNode<Data>& original)
@@ -11,8 +16,8 @@ TreeNode<Data>::TreeNode(const TreeNode<Data>& original)
 
 template <typename Data>
 TreeNode<Data>::TreeNode(const Data& new_data, 
-	const TreeNode<Data>* new_left, 
-	const TreeNode<Data>* new_right)
+	TreeNode<Data>* new_left,
+	TreeNode<Data>* new_right)
 	: right(new_right)
 	, left(new_left)
 	, data(new_data)
@@ -44,13 +49,15 @@ TreeNode<Data>* TreeNode<Data>::getRight() const
 }
 
 template <typename Data>
-void TreeNode<Data>::setLeft(const TreeNode<Data>* new_left)
+void TreeNode<Data>::setLeft(TreeNode<Data>* new_left)
 {
 	left = new_left;
 }
 
 template <typename Data>
-void TreeNode<Data>::setRight(const TreeNode<Data>* new_right)
+void TreeNode<Data>::setRight(TreeNode<Data>* new_right)
 {
 	right = new_right;
 }
+
+#endif
