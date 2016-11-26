@@ -33,8 +33,8 @@ template <typename Data>
 int BinarySearchTree<Data>::recursivelyGetHeight(TreeNode<int>* sub_tree) const
 {
 	return sub_tree == nullptr ?
-		0 : 1 + max(recursivelyGetHeight(sub_tree->getLeft()), 
-		            recursivelyGetHeight(sub_tree->getRight()));
+		0 : 1 + max(recursivelyGetHeight(sub_tree->getRight()),
+		            recursivelyGetHeight(sub_tree->getLeft()));
 }
 
 template <typename Data>
