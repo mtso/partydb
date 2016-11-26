@@ -7,7 +7,9 @@ using namespace std;
 
 int main()
 {
-	
+	BinarySearchTree<int> tree;
+
+
 	system("pause");
 	return 0;
 }

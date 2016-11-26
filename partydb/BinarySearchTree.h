@@ -2,12 +2,23 @@
 // Lab 4: partydb
 // CIS 22C F2016: Adrian Marroquin, Matthew Tso
 
+#ifndef PARTYDB_BINARYSEARCHTREE_H
+#define PARTYDB_BINARYSEARCHTREE_H
+
+#include "TreeNode.h"
+
 template <typename Data>
 class BinarySearchTree
 {
 private:
+	TreeNode<Data>* root;
+
+	int node_count;
 
 public:
+
+	BinarySearchTree();
+	~BinarySearchTree();
 
 	bool isEmpty() const;
 
@@ -30,3 +41,9 @@ public:
 	Data getData(const Data& target);
 
 };
+
+#ifndef PARTYDB_BINARYSEARCHTREE_CPP
+#include "BinarySearchTree.cpp"
+#endif
+
+#endif
