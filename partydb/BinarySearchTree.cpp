@@ -70,7 +70,15 @@ Data BinarySearchTree<Data>::getRootData() const
 }
 
 template <typename Data>
-void BinarySearchTree<Data>::setRootData(const Data& new_data);
+void BinarySearchTree<Data>::setRootData(const Data& new_data)
+{
+	if (root == nullptr) {
+		root = new TreeNode<Data>(new_data);
+	}
+	else {
+		root->setData(new_data);
+	}
+}
 
 template <typename Data>
 void BinarySearchTree<Data>::insert(const Data& new_data)
