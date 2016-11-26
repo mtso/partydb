@@ -6,6 +6,11 @@ using namespace std;
 #include "TreeNode.h"
 #include "Person.h"
 
+void print(int& node)
+{
+	cout << node << endl;
+}
+
 int main()
 {
 	BinarySearchTree<int> tree;
@@ -13,6 +18,10 @@ int main()
 	tree.insert(4);
 	tree.insert(2);
 	tree.insert(6);
+
+	tree.traverseInorder(print);
+	tree.traversePreorder(print);
+	tree.traversePostorder(print);
 
 	tree.contains(6);
 

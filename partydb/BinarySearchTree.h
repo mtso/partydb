@@ -46,6 +46,20 @@ protected:
 	 */
 	TreeNode<Data>* find(const Data& target, TreeNode<Data>* sub_tree) const;
 
+	/**
+	 * Recursive in-order
+	 */
+	void inorder(void visit(Data& data), TreeNode<Data>* parent) const;
+
+	/**
+	* Recursive pre-order
+	*/
+	void preorder(void visit(Data& data), TreeNode<Data>* parent) const;
+
+	/**
+	* Recursive post-order
+	*/
+	void postorder(void visit(Data& data), TreeNode<Data>* parent) const;
 public:
 
 	/**
@@ -121,6 +135,23 @@ public:
 	 * Returns the found node's data
 	 */
 	Data getData(const Data& target);
+
+	// TRAVERSALS
+
+	/**
+	 * In-Order Traversal
+	 */
+	void traverseInorder(void visit(Data& data)) const;
+
+	/**
+	* Pre-Order Traversal
+	*/
+	void traversePreorder(void visit(Data& data)) const;
+
+	/**
+	* Post-Order Traversal
+	*/
+	void traversePostorder(void visit(Data& data)) const;
 };
 
 #ifndef PARTYDB_BINARYSEARCHTREE_CPP

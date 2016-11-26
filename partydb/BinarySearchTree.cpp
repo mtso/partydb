@@ -59,6 +59,42 @@ TreeNode<Data>* BinarySearchTree<Data>::find(const Data& target, TreeNode<Data>*
 	}
 }
 
+template <typename Data>
+void BinarySearchTree<Data>::inorder(void visit(Data& data), TreeNode<Data>* parent) const
+{
+	if (parent != nullptr)
+	{
+		inorder(visit, parent->getLeft());
+		Data parent_data = parent->getData();
+		visit(parent_data);
+		inorder(visit, parent->getRight());
+	}
+}
+
+template <typename Data>
+void BinarySearchTree<Data>::preorder(void visit(Data& data), TreeNode<Data>* parent) const
+{
+	if (parent != nullptr)
+	{
+		Data parent_data = parent->getData();
+		visit(parent_data);
+		preorder(visit, parent->getLeft());
+		preorder(visit, parent->getRight());
+	}
+}
+
+template <typename Data>
+void BinarySearchTree<Data>::postorder(void visit(Data& data), TreeNode<Data>* parent) const
+{
+	if (parent != nullptr)
+	{
+		postorder(visit, parent->getLeft());
+		postorder(visit, parent->getRight());
+		Data parent_data = parent->getData();
+		visit(parent_data);
+	}
+}
+
 //Public functions
 
 template <typename Data>
@@ -162,6 +198,25 @@ Data BinarySearchTree<Data>::getData(const Data& target)
 {
 	TreeNode<Data>* search = find(target, root);
 	return (search != nullptr) ? search->getData() : throw NotFoundException();
+}
+
+template <typename Data>
+void BinarySearchTree<Data>::traverseInorder(void visit(Data& data)) const
+{
+	inorder(visit, root);
+}
+
+
+template <typename Data>
+void BinarySearchTree<Data>::traversePreorder(void visit(Data& data)) const
+{
+	preorder(visit, root);
+}
+
+template <typename Data>
+void BinarySearchTree<Data>::traversePostorder(void visit(Data& data)) const
+{
+	postorder(visit, root);
 }
 
 #endif
