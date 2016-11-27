@@ -16,9 +16,14 @@ private:
 	Birthdate birthday;
 	string name;
 public:
+	// Default constructor should not be directly used other than as a type-specifier
+	Person();
 	Person(const Birthdate& new_birthday, const string& new_name);
 	Birthdate getBirthday() const;
 	string getName() const;
+
+	bool operator== (const Person& right) const;
+	bool operator>  (const Person& right) const;
 };
 
 #endif

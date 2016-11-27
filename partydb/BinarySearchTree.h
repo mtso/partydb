@@ -75,10 +75,6 @@ protected:
 	*/
 	void postorder(void visit(Data& data), TreeNode<Data>* parent) const;
 
-	///**
-	// * Recursive breadth-first traversal helper
-	// */
-	//void breadthFirst(void visit(Data& data), TreeNode<Data>* parent) const;
 public:
 
 	/**
