@@ -25,6 +25,12 @@ void outputBreadthFirst(Person<S>& person);
 ofstream output_postorder;
 ofstream output_breadthfirst;
 
+BinarySearchTree<Person<BY_NAME>> people_name;
+
+void addToPeopleName(Person<BY_BIRTHDAY>& person_bday) {
+	people_name.insert(Person<BY_NAME>(person_bday.getName().getValue(), person_bday.getBirthday()));
+}
+
 // Entry point for executable
 int main()
 {
@@ -33,7 +39,8 @@ int main()
 	cout << "Reads name and birthday data from 'input.txt' in\nthe format of `[name] [mm]-[dd]-[yyyy]` per line, \nthen outputs the collected data to two files: \none for post-order traversal and \nthe other for breadth-first traversal.";
 	cout << endl << endl;
 
-	BinarySearchTree<Person<BY_NAME>> people;
+	BinarySearchTree<Person<BY_BIRTHDAY>> people_bday;
+	//BinarySearchTree<Person<BY_NAME>> people_name;
 
 	ifstream data;
 	string line;
@@ -47,18 +54,16 @@ int main()
 	cout << line << endl;
 
 	int iter = 0;
-	Person<BY_NAME> person;
+	Person<BY_BIRTHDAY> person;
 	while (getline(data, line)) {
-		person = Person<BY_NAME>(line);
+		person = Person<BY_BIRTHDAY>(line);
 		if (person.getName().getValue().length() < 1) { continue; }
 
-		people.insert(person);
+		people_bday.insert(person);
 
 		//names.insert(person.getName());
 		//birthdays.insert(person.getBirthday());
 
-		iter++;
-		if (iter > 2000) { break; }
 		//cout << "\r                                \r"; // This needs to be longer than the longest name
 		//cout << person.getName();
 	}
@@ -66,16 +71,22 @@ int main()
 	cout << "\r                                \r";
 	cout << "Success." << endl;
 
-	// Print people
+	// Since our BST is not self-balancing,
+	// we need to populate the tree sorted by name
+	// using data from the tree sorted by birthday
+	// otherwise, it will take a long time....
+	people_bday.traverseInorder(addToPeopleName);
+
+	// Traverse the bday tree and output to post-order file
 	cout << "Outputting postorder to 'output_postorder.txt'" << endl;
 	output_postorder.open("..\\output_postorder.txt");
-	people.traversePostorder(outputPostorder<BY_NAME>);
+	people_bday.traversePostorder(outputPostorder<BY_BIRTHDAY>);
 	output_postorder.close();
 
-	// Traverse the tree and output to breadth-first file
+	// Traverse the name tree and output to breadth-first file
 	cout << "Outputting breadth-first to 'output_breadthfirst.txt'" << endl;
 	output_breadthfirst.open("..\\output_breadthfirst.txt");
-	people.traverseBreadth(outputBreadthFirst<BY_NAME>);
+	people_name.traverseBreadth(outputBreadthFirst<BY_NAME>);
 	output_breadthfirst.close();
 
 	system("pause");

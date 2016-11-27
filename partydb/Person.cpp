@@ -49,10 +49,13 @@ bool Person<S>::operator== (const Person& right) const
 	return birthday == right.birthday && name == right.name;
 }
 
+// BY_BIRTHDAY compares both fields because birthdays can repeat
+// whereas the rule for names is that names cannot repeat
+
 template <>
 bool Person<BY_BIRTHDAY>::operator== (const Person& right) const
 {
-	return birthday == right.birthday;
+	return birthday == right.birthday && name == right.name;
 }
 
 template <>
@@ -61,11 +64,14 @@ bool Person<BY_NAME>::operator== (const Person& right) const
 	return name == right.name;
 }
 
+// By the same token, the operator > 
+// also needs to compare both fields
+
 template <>
 bool Person<BY_BIRTHDAY>::operator> (const Person<BY_BIRTHDAY>& right) const
 {
 	if (birthday == right.birthday) {
-		// If birthdays are equal, 05-12-1979
+		// If birthdays are equal,
 		// return the name that comes before the other in the ASCII table
 		return name > right.name;
 	}
