@@ -33,10 +33,10 @@ bool Person::operator== (const Person& right) const
 
 bool Person::operator> (const Person& right) const
 {
-	if (birthday == right.birthday) {
-		// If birthdays are equal, 
-		// return the name that comes before the other in the ASCII table
-		return (strcmp(name.c_str(), right.name.c_str()) < 0);
-	}
+	//if (birthday == right.birthday) {
+	//	// If birthdays are equal, 
+	//	// return the name that comes before the other in the ASCII table
+	//	return (strcmp(name.c_str(), right.name.c_str()) < 0);
+	//}
 	return birthday > right.birthday;
 }

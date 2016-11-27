@@ -7,6 +7,7 @@
 
 #include <string>
 #include "Birthdate.h"
+#include "Name.h"
 
 using namespace std;
 
@@ -14,7 +15,8 @@ class Person
 {
 private:
 	Birthdate birthday;
-	string name;
+	Name name;
+	
 public:
 	// Default constructor should not be directly used other than as a type-specifier
 	Person();
