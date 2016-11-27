@@ -10,7 +10,7 @@ Person::Person()
 {
 }
 
-Person::Person(const Birthdate& new_birthday, const string& new_name)
+Person::Person(const string& new_name, const Birthdate& new_birthday)
 	: birthday(new_birthday)
 	, name(new_name)
 {
