@@ -25,9 +25,11 @@ void outputBreadthFirst(Person<S>& person);
 ofstream output_postorder;
 ofstream output_breadthfirst;
 
+// !!DANGER!!
+// global variable name-sorted tree should only be used for traversal 
 BinarySearchTree<Person<BY_NAME>> people_name;
 
-void addToPeopleName(Person<BY_BIRTHDAY>& person_bday) {
+void addToNameSortedTree(Person<BY_BIRTHDAY>& person_bday) {
 	people_name.insert(Person<BY_NAME>(person_bday.getName().getValue(), person_bday.getBirthday()));
 }
 
@@ -40,7 +42,6 @@ int main()
 	cout << endl << endl;
 
 	BinarySearchTree<Person<BY_BIRTHDAY>> people_bday;
-	//BinarySearchTree<Person<BY_NAME>> people_name;
 
 	ifstream data;
 	string line;
@@ -61,21 +62,19 @@ int main()
 
 		people_bday.insert(person);
 
-		//names.insert(person.getName());
-		//birthdays.insert(person.getBirthday());
-
 		//cout << "\r                                \r"; // This needs to be longer than the longest name
-		//cout << person.getName();
+		//cout << person.getName().getValue();
 	}
 	data.close();
 	cout << "\r                                \r";
 	cout << "Success." << endl;
 
 	// Since our BST is not self-balancing,
+	// and we have over 20000+ data entries,
 	// we need to populate the tree sorted by name
-	// using data from the tree sorted by birthday
+	// using data from the tree sorted by birthday;
 	// otherwise, it will take a long time....
-	people_bday.traverseInorder(addToPeopleName);
+	people_bday.traverseInorder(addToNameSortedTree);
 
 	// Traverse the bday tree and output to post-order file
 	cout << "Outputting postorder to 'output_postorder.txt'" << endl;
