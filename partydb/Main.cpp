@@ -9,36 +9,63 @@ using namespace std;
 #include "BinarySearchTree.h"
 #include "Person.h"
 
+// Prints people tree to cout
 void printPeople(Person& person);
 
+// outputs tree to postorder file
 void outputPostorder(Person& person);
+
+// outputs tree to breadthfirst file
 void outputBreadthFirst(Person& person);
 
-bool parse(const string& line);
+// parses a string for name and birthday
+// returns a Person object
 Person parsePersonIn(const string& line);
+
+// parses a raw birthday string
+// returns a Birthdate object
 Birthdate parseBirthdate(const string& raw_birthday);
+
+// returns the index of a target character in the string
 int charIndexIn(const string& str, const char& character);
 
+// !!DANGER!!
+// global ofstreams that should only be 
+// used in the output functions
 ofstream output_postorder;
 ofstream output_breadthfirst;
 
+// Entry point for executable
 int main()
 {
+	cout << "Party DB" << endl;
+
 	BinarySearchTree<Person> people;
 
+	// Read in the values from the input data file
+	// Place them in the people tree
+	cout << "Reading input.txt file... " << endl;
 	ifstream data;
 	data.open("..\\input.txt");
 	string line;
 	while (getline(data, line)) {
 		Person person = parsePersonIn(line);
 		people.insert(person);
+		cout << "\r                                \r";
+		cout << "Reading: " << person.getName();
 	}
 	data.close();
+	cout << "\r                                \r";
+	cout << "Success." << endl;
 
+	cout << "Outputting postorder to 'output_postorder.txt'" << endl;
+	// Traverse the tree and output to postorder file
 	output_postorder.open("..\\output_postorder.txt");
 	people.traversePostorder(outputPostorder);
 	output_postorder.close();
 
+	cout << "Outputting breadth-first to 'output_breadthfirst.txt'" << endl;
+	// Traverse the tree and output to breadth-first file
 	output_breadthfirst.open("..\\output_breadthfirst.txt");
 	people.traverseBreadth(outputBreadthFirst);
 	output_breadthfirst.close();

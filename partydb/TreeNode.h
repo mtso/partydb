@@ -5,8 +5,6 @@
 #ifndef PARTYDB_TREENODE_H
 #define PARTYDB_TREENODE_H
 
-//#include "Node.h"
-
 template <typename Data>
 class TreeNode
 {
@@ -32,7 +30,6 @@ public:
 
 	void setLeft(TreeNode<Data>* new_left);
 	void setRight(TreeNode<Data>* new_right);
-
 };
 
 #ifndef PARTYDB_TREENODE_CPP
