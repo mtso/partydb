@@ -287,4 +287,29 @@ void BinarySearchTree<Data>::traversePostorder(void visit(Data& data)) const
 	postorder(visit, root);
 }
 
+template <typename Data>
+void BinarySearchTree<Data>::traverseBreadth(void visit(Data& data)) const
+{
+	if (isEmpty()) { return; }
+
+	Queue<TreeNode<Data>*> nodes;
+	TreeNode<Data>* walker;
+	Data current;
+
+	nodes.enqueue(root);
+	while (!nodes.isEmpty()) {
+
+		walker = nodes.dequeue();
+		current = walker->getData();
+		visit(current);
+
+		if (walker->getLeft() != nullptr) {
+			nodes.enqueue(walker->getLeft());
+		}
+		if (walker->getRight() != nullptr) {
+			nodes.enqueue(walker->getRight());
+		}
+	}
+}
+
 #endif

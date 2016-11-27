@@ -6,6 +6,7 @@
 #define PARTYDB_BINARYSEARCHTREE_H
 
 #include "TreeNode.h"
+#include "Queue.h"
 
 template <typename T>
 T max(const T& x, const T& y);
@@ -73,6 +74,11 @@ protected:
 	* Recursive post-order
 	*/
 	void postorder(void visit(Data& data), TreeNode<Data>* parent) const;
+
+	///**
+	// * Recursive breadth-first traversal helper
+	// */
+	//void breadthFirst(void visit(Data& data), TreeNode<Data>* parent) const;
 public:
 
 	/**
@@ -165,6 +171,11 @@ public:
 	* Post-Order Traversal
 	*/
 	void traversePostorder(void visit(Data& data)) const;
+
+	/**
+	 * Breadth-first traversal
+	 */
+	void traverseBreadth(void visit(Data& data)) const;
 };
 
 #ifndef PARTYDB_BINARYSEARCHTREE_CPP
