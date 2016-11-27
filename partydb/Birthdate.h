@@ -12,6 +12,8 @@ private:
 	int day;
 	int year;
 public:
+	// Default Constructor should never be used to describe a real birthday.
+	Birthdate();
 	Birthdate(const int& new_month,
 	          const int& new_day,
 	          const int& new_year);

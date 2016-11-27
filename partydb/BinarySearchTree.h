@@ -47,6 +47,19 @@ protected:
 	TreeNode<Data>* find(const Data& target, TreeNode<Data>* sub_tree) const;
 
 	/**
+	* Removes a node from the tree
+	*/
+	TreeNode<Data>* removeValue(const Data& target, TreeNode<Data>* parent);
+	/**
+	 * Removes a node from the tree
+	 */
+	TreeNode<Data>* removeNode(TreeNode<Data>* to_remove);
+	/**
+	* Removes a node from the tree
+	*/
+	TreeNode<Data>* removeLeftmostNode(TreeNode<Data>* parent, Data& inorder_successor);
+
+	/**
 	 * Recursive in-order
 	 */
 	void inorder(void visit(Data& data), TreeNode<Data>* parent) const;

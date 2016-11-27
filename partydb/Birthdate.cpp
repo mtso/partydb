@@ -4,6 +4,13 @@
 
 #include "Birthdate.h"
 
+Birthdate::Birthdate()
+: month(0)
+, day(0)
+, year(0)
+{
+}
+
 Birthdate::Birthdate(
 	const int& new_month,
 	const int& new_day,

@@ -60,6 +60,71 @@ TreeNode<Data>* BinarySearchTree<Data>::find(const Data& target, TreeNode<Data>*
 }
 
 template <typename Data>
+TreeNode<Data>* BinarySearchTree<Data>::removeValue(const Data& target, TreeNode<Data>* to_remove)
+{
+	// Return nullptr if not found
+	if (to_remove == nullptr) { return to_remove; }
+	
+	if (to_remove->getData() == target) {
+		// Found node
+		to_remove = removeNode(to_remove);
+	}
+	else if (to_remove->getData() > target) {
+		// Search left if the data of this node is greater than the target
+		TreeNode<Data>* new_left = removeValue(target, to_remove->getLeft());
+		to_remove->setLeft(new_left);
+	}
+	else {
+		TreeNode<Data>* new_right = removeValue(target, to_remove->getRight());
+		to_remove->setRight(new_right);
+	}
+	return to_remove;
+}
+
+template <typename Data>
+TreeNode<Data>* BinarySearchTree<Data>::removeNode(TreeNode<Data>* parent)
+{
+	if (parent->isLeaf()) {
+		delete parent;
+		node_count--; // Decrement after deletion
+		return nullptr;
+	}
+	else if (!parent->isFull()) {
+		TreeNode<Data>* connector =
+			parent->getLeft() != nullptr ?
+			parent->getLeft() : parent->getRight();
+		delete parent;
+		node_count--; // Decrement after deletion
+		return connector;
+	}
+	else {
+		// Stores the data of the inorder successor that is in the right sub-tree
+		Data inorder_successor;
+		// connector is a pointer to the new sub-tree
+		TreeNode<Data>* connector = removeLeftmostNode(parent->getRight(), inorder_successor);
+		// set the right child as the new sub-tree
+		parent->setRight(connector);
+		parent->setData(inorder_successor);
+		return parent;
+	}
+}
+
+template <typename Data>
+TreeNode<Data>* BinarySearchTree<Data>::removeLeftmostNode(TreeNode<Data>* to_remove, Data& inorder_successor)
+{
+	if (to_remove->getLeft() == nullptr) {
+		// Found the leftmost node (in-order successor)
+		inorder_successor = to_remove->getData();
+		return removeNode(to_remove);
+	}
+	else {
+		TreeNode<Data>* connector = removeLeftmostNode(to_remove->getLeft(), inorder_successor);
+		to_remove->setLeft(connector);
+		return to_remove;
+	}
+}
+
+template <typename Data>
 void BinarySearchTree<Data>::inorder(void visit(Data& data), TreeNode<Data>* parent) const
 {
 	if (parent != nullptr)
@@ -178,7 +243,10 @@ void BinarySearchTree<Data>::insert(const Data& new_data)
 }
 
 template <typename Data>
-void BinarySearchTree<Data>::remove(const Data& target);
+void BinarySearchTree<Data>::remove(const Data& target)
+{
+	root = removeValue(target, root);
+}
 
 template <typename Data>
 void BinarySearchTree<Data>::clear()

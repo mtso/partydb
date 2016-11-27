@@ -19,6 +19,7 @@ public:
 		TreeNode<Data>* new_right = nullptr);
 
 	bool isLeaf() const;
+	bool isFull() const;
 
 	Data getData() const;
 	void setData(const Data& new_data);

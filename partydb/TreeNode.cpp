@@ -31,6 +31,12 @@ bool TreeNode<Data>::isLeaf() const
 }
 
 template <typename Data>
+bool TreeNode<Data>::isFull() const
+{
+	return right != nullptr && left != nullptr;
+}
+
+template <typename Data>
 Data TreeNode<Data>::getData() const
 {
 	return data;

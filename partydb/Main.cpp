@@ -47,6 +47,10 @@ int main()
 	string test_name = "Mickey";
 	Person mickey = Person(test_date, test_name);
 
+	for (int i = -1; i < 10000; i *= -2) {
+		cout << i << endl;
+	}
+
 	system("pause");
 	return 0;
 }
