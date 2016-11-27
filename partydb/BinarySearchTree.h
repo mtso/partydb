@@ -6,7 +6,7 @@
 #define PARTYDB_BINARYSEARCHTREE_H
 
 #include "TreeNode.h"
-#include "Queue.h"
+#include "ADT\\Queue.h"
 
 template <typename T>
 T max(const T& x, const T& y);
