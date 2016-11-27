@@ -70,6 +70,8 @@
     <ClInclude Include="BinarySearchTree.h" />
     <ClInclude Include="Birthdate.h" />
     <ClInclude Include="Generator.h" />
+    <ClInclude Include="Name.h" />
+    <ClInclude Include="OrderStrategy.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="TreeNode.h" />
   </ItemGroup>
@@ -80,6 +82,7 @@
     <ClCompile Include="BinarySearchTree.cpp" />
     <ClCompile Include="Birthdate.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Name.cpp" />
     <ClCompile Include="Person.cpp" />
     <ClCompile Include="TreeNode.cpp" />
   </ItemGroup>

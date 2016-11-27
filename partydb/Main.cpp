@@ -10,31 +10,14 @@ using namespace std;
 #include "Person.h"
 #include "ADT\Queue.h"
 
-// Prints people tree to cout
-void printPeople(Person& person);
-
 // outputs tree to postorder file
-void outputPostorder(Person& person);
+template <int S>
+void outputPostorder(Person<S>& person);
 
 // outputs tree to breadthfirst file
-void outputBreadthFirst(Person& person);
+template <int S>
+void outputBreadthFirst(Person<S>& person);
 
-// outputs names tree to postorder file
-void outputName(string& name);
-
-// outputs birthday tree to breadth-first file
-void outputBirthday(Birthdate& bday);
-
-// parses a string for name and birthday
-// returns a Person object
-Person parsePersonIn(const string& line);
-
-// parses a raw birthday string
-// returns a Birthdate object
-Birthdate parseBirthdate(const string& raw_birthday);
-
-// returns the index of a target character in the string
-int lastIndexIn(const string& str, const char& character);
 
 // !!DANGER!!
 // global ofstreams that should only be 
@@ -50,10 +33,7 @@ int main()
 	cout << "Reads name and birthday data from 'input.txt' in\nthe format of `[name] [mm]-[dd]-[yyyy]` per line, \nthen outputs the collected data to two files: \none for post-order traversal and \nthe other for breadth-first traversal.";
 	cout << endl << endl;
 
-	BinarySearchTree<Person> people;
-
-	//BinarySearchTree<string> names;
-	//BinarySearchTree<Birthdate> birthdays;
+	BinarySearchTree<Person<BY_NAME>> people;
 
 	ifstream data;
 	string line;
@@ -67,18 +47,18 @@ int main()
 	cout << line << endl;
 
 	int iter = 0;
-	Person person;
+	Person<BY_NAME> person;
 	while (getline(data, line)) {
-		person = parsePersonIn(line);
-		if (person.getName().length() < 1) { continue; }
+		person = Person<BY_NAME>(line);
+		if (person.getName().getValue().length() < 1) { continue; }
 
 		people.insert(person);
 
 		//names.insert(person.getName());
 		//birthdays.insert(person.getBirthday());
 
-		//iter++;
-		//if (iter > 2000) { break; }
+		iter++;
+		if (iter > 2000) { break; }
 		//cout << "\r                                \r"; // This needs to be longer than the longest name
 		//cout << person.getName();
 	}
@@ -89,36 +69,24 @@ int main()
 	// Print people
 	cout << "Outputting postorder to 'output_postorder.txt'" << endl;
 	output_postorder.open("..\\output_postorder.txt");
-	people.traversePostorder(outputPostorder);
+	people.traversePostorder(outputPostorder<BY_NAME>);
 	output_postorder.close();
 
-	// Traverse the tree and output to postorder file
-	//cout << "Outputting postorder to 'output_postorder.txt'" << endl; 
-	//output_postorder.open("..\\output_postorder.txt");
-	//names.traversePostorder(outputName);
-	//output_postorder.close();
-
 	// Traverse the tree and output to breadth-first file
-	//cout << "Outputting breadth-first to 'output_breadthfirst.txt'" << endl;
-	//output_breadthfirst.open("..\\output_breadthfirst.txt");
-	//birthdays.traverseBreadth(outputBirthday);
-	//output_breadthfirst.close();
+	cout << "Outputting breadth-first to 'output_breadthfirst.txt'" << endl;
+	output_breadthfirst.open("..\\output_breadthfirst.txt");
+	people.traverseBreadth(outputBreadthFirst<BY_NAME>);
+	output_breadthfirst.close();
 
 	system("pause");
 	return 0;
 }
 
-void printPeople(Person& person)
-{
-	cout << person.getBirthday().getMonth() << "-"
-		<< person.getBirthday().getDay() << "-"
-		<< person.getBirthday().getYear() << endl;
-}
-
-void outputPostorder(Person& person)
+template <int S>
+void outputPostorder(Person<S>& person)
 {
 	Birthdate bday = person.getBirthday();
-	output_postorder << person.getName() << " ";
+	output_postorder << person.getName().getValue() << " ";
 
 	if (bday.getMonth() < 10) { output_postorder << "0"; }
 	output_postorder << bday.getMonth() << "-";
@@ -127,58 +95,15 @@ void outputPostorder(Person& person)
 	output_postorder << bday.getYear() << endl;
 }
 
-void outputName(string& name)
-{
-	output_postorder << name << endl;
-}
-
-
-void outputBreadthFirst(Person& person)
+template <int S>
+void outputBreadthFirst(Person<S>& person)
 {
 	Birthdate bday = person.getBirthday();
-	output_breadthfirst << person.getName() << " ";
+	output_breadthfirst << person.getName().getValue() << " ";
 
 	if (bday.getMonth() < 10) { output_breadthfirst << "0"; }
 	output_breadthfirst << bday.getMonth() << "-";
 	if (bday.getDay() < 10) { output_breadthfirst << "0"; }
 	output_breadthfirst << bday.getDay() << "-";
 	output_breadthfirst << bday.getYear() << endl;
-}
-
-void outputBirthday(Birthdate& bday)
-{
-	if (bday.getMonth() < 10) { output_breadthfirst << "0"; }
-	output_breadthfirst << bday.getMonth() << "-";
-	if (bday.getDay() < 10) { output_breadthfirst << "0"; }
-	output_breadthfirst << bday.getDay() << "-";
-	output_breadthfirst << bday.getYear() << endl;
-}
-
-Person parsePersonIn(const string& line)
-{
-	int space_index = lastIndexIn(line, ' ');
-	string name = line.substr(0, space_index);
-	string raw_birthday = line.substr(space_index + 1, line.length() - space_index - 1);
-
-	Birthdate birthday = parseBirthdate(raw_birthday);
-	return Person(name, birthday);
-}
-
-Birthdate parseBirthdate(const string& raw_birthday)
-{
-	string month = raw_birthday.substr(0, 2);
-	string day   = raw_birthday.substr(3, 2);
-	string year  = raw_birthday.substr(6, 4);
-	return Birthdate( stoi(month), stoi(day), stoi(year) );
-}
-
-int lastIndexIn(const string& str, const char& character)
-{
-	int index = -1;
-	for (int i = 0; i < (int)str.length(); i++) {
-		if (str[i] == character) {
-			index = i;
-		}
-	}
-	return index;
 }

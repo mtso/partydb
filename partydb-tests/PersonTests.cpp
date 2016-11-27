@@ -17,12 +17,12 @@ namespace partydbtests
 		{
 			Birthdate test_date = Birthdate(11, 13, 1928);
 			string test_name = "Mickey";
-			Person mickey = Person(test_name, test_date);
+			Person<BY_BIRTHDAY> mickey = Person<BY_BIRTHDAY>(test_name, test_date);
 
 			Assert::AreEqual(test_date.getMonth(), mickey.getBirthday().getMonth());
 			Assert::AreEqual(test_date.getDay(), mickey.getBirthday().getDay());
 			Assert::AreEqual(test_date.getYear(), mickey.getBirthday().getYear());
-			Assert::AreEqual(test_name, mickey.getName());
+			Assert::AreEqual(test_name, mickey.getName().getValue());
 		}
 
 		TEST_METHOD(BirthdateConstruction) {

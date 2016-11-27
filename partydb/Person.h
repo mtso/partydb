@@ -5,27 +5,36 @@
 #ifndef PARTYDB_PERSON_H
 #define PARTYDB_PERSON_H
 
-#include <string>
 #include "Birthdate.h"
 #include "Name.h"
+#include "OrderStrategy.h"
 
-using namespace std;
-
+template <int S>
 class Person
 {
 private:
 	Birthdate birthday;
 	Name name;
+
+	inline Person parsePersonIn(const string& line);
+	inline Birthdate parseBirthdate(const string& raw_birthday);
+	inline int lastIndexIn(const string& str, const char& character);
 	
 public:
 	// Default constructor should not be directly used other than as a type-specifier
-	Person();
-	Person(const string& new_name, const Birthdate& new_birthday);
-	Birthdate getBirthday() const;
-	string getName() const;
+	inline Person();
+	inline Person(const string& new_name, const Birthdate& new_birthday);
+	inline Person(const string& raw_data_entry);
 
-	bool operator== (const Person& right) const;
-	bool operator>  (const Person& right) const;
+	inline Birthdate getBirthday() const;
+	inline Name getName() const;
+
+	inline bool operator== (const Person& right) const;
+	inline bool operator>  (const Person& right) const;
 };
+
+#ifndef PARTYDB_PERSON_CPP
+#include "Person.cpp"
+#endif
 
 #endif
