@@ -30,8 +30,8 @@ Birthdate::Birthdate(
 	switch (month) {
 	case 2:
 		max_days = 29;
-
 		break;
+
 	case 4:
 	case 6:
 	case 9:
