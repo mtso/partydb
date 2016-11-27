@@ -39,38 +39,41 @@ ofstream output_breadthfirst;
 // Entry point for executable
 int main()
 {
+	// Output PartyDB description
 	cout << "<< PartyDB by Matthew Tso >>" << endl;
 	cout << "Reads name and birthday data from 'input.txt' in\nthe format of `[name] [mm]-[dd]-[yyyy]` per line, \nthen outputs the tree's data to two files: \none for post-order traversal and \nthe other for breadth-first traversal.";
 	cout << endl << endl;
 
 	BinarySearchTree<Person> people;
+	ifstream data;
+	string line;
 
 	// Read in the values from the input data file
 	// Place them in the people tree
 	cout << "Reading input.txt file containing " << endl;
-	ifstream data;
 	data.open("..\\input.txt");
-	string line;
+
 	getline(data, line);
 	cout << line << endl;
+
 	while (getline(data, line)) {
 		Person person = parsePersonIn(line);
 		people.insert(person);
-		cout << "\r                                \r";
+		cout << "\r                                \r"; // This needs to be longer than the longest name
 		cout << person.getName();
 	}
 	data.close();
 	cout << "\r                                \r";
 	cout << "Success." << endl;
 
-	cout << "Outputting postorder to 'output_postorder.txt'" << endl;
 	// Traverse the tree and output to postorder file
+	cout << "Outputting postorder to 'output_postorder.txt'" << endl; 
 	output_postorder.open("..\\output_postorder.txt");
 	people.traversePostorder(outputPostorder);
 	output_postorder.close();
 
-	cout << "Outputting breadth-first to 'output_breadthfirst.txt'" << endl;
 	// Traverse the tree and output to breadth-first file
+	cout << "Outputting breadth-first to 'output_breadthfirst.txt'" << endl;
 	output_breadthfirst.open("..\\output_breadthfirst.txt");
 	people.traverseBreadth(outputBreadthFirst);
 	output_breadthfirst.close();
