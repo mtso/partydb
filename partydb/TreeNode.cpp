@@ -1,3 +1,6 @@
+// TreeNode.cpp
+// Lab 4: partydb
+// CIS 22C F2016: Matthew Tso
 
 #ifndef PARTYDB_TREENODE_CPP
 #define PARTYDB_TREENODE_CPP

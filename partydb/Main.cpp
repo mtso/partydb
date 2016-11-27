@@ -1,3 +1,6 @@
+// Main.cpp
+// Lab 4: partydb
+// CIS 22C F2016: Matthew Tso
 
 #include <iostream>
 #include <fstream>
@@ -9,7 +12,7 @@ using namespace std;
 void printPeople(Person& person);
 
 void outputPostorder(Person& person);
-void outputBreathFirst(Person& person);
+void outputBreadthFirst(Person& person);
 
 bool parse(const string& line);
 Person parsePersonIn(const string& line);
@@ -33,8 +36,12 @@ int main()
 	data.close();
 
 	output_postorder.open("..\\output_postorder.txt");
-	people.traverseInorder(outputPostorder);
+	people.traversePostorder(outputPostorder);
 	output_postorder.close();
+
+	output_breadthfirst.open("..\\output_breadthfirst.txt");
+	people.traverseBreadth(outputBreadthFirst);
+	output_breadthfirst.close();
 
 	system("pause");
 	return 0;
@@ -50,17 +57,26 @@ void printPeople(Person& person)
 void outputPostorder(Person& person)
 {
 	Birthdate bday = person.getBirthday();
-	output_postorder << person.getName() << " "
-		<< bday.getMonth() << "-"
-		<< bday.getDay() << "-"
-		<< bday.getYear() << endl;
+	output_postorder << person.getName() << " ";
+
+	if (bday.getMonth() < 10) { output_postorder << "0"; }
+	output_postorder << bday.getMonth() << "-";
+	if (bday.getDay() < 10) { output_postorder << "0"; }
+	output_postorder << bday.getDay() << "-";
+	output_postorder << bday.getYear() << endl;
 }
-void outputBreathFirst(Person& person)
+
+void outputBreadthFirst(Person& person)
 {
+	Birthdate bday = person.getBirthday();
+	output_breadthfirst << person.getName() << " ";
 
+	if (bday.getMonth() < 10) { output_breadthfirst << "0"; }
+	output_breadthfirst << bday.getMonth() << "-";
+	if (bday.getDay() < 10) { output_breadthfirst << "0"; }
+	output_breadthfirst << bday.getDay() << "-";
+	output_breadthfirst << bday.getYear() << endl;
 }
-
-
 
 Person parsePersonIn(const string& line)
 {
