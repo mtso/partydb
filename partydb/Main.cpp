@@ -6,39 +6,61 @@ using namespace std;
 #include "BinarySearchTree.h"
 #include "Person.h"
 
-void print(int& node)
-{
-	cout << node + node << endl;
-}
+void printPeople(Person& person);
 
-void printPeople(Person& person)
-{
-	cout << person.getName() << endl;
-}
+void outputPostorder(Person& person);
+void outputBreathFirst(Person& person);
 
 bool parse(const string& line);
 Person parsePersonIn(const string& line);
 Birthdate parseBirthdate(const string& raw_birthday);
 int charIndexIn(const string& str, const char& character);
 
+ofstream output_postorder;
+ofstream output_breadthfirst;
+
 int main()
 {
+	BinarySearchTree<Person> people;
+
 	ifstream data;
 	data.open("..\\input.txt");
 	string line;
-
 	while (getline(data, line)) {
-		//cout << line << endl;
 		Person person = parsePersonIn(line);
-		cout << person.getName();
-		cout << " " << person.getBirthday().getYear() << endl;
+		people.insert(person);
 	}
-
 	data.close();
+
+	output_postorder.open("..\\output_postorder.txt");
+	people.traverseInorder(outputPostorder);
+	output_postorder.close();
 
 	system("pause");
 	return 0;
 }
+
+void printPeople(Person& person)
+{
+	cout << person.getBirthday().getMonth() << "-"
+		<< person.getBirthday().getDay() << "-"
+		<< person.getBirthday().getYear() << endl;
+}
+
+void outputPostorder(Person& person)
+{
+	Birthdate bday = person.getBirthday();
+	output_postorder << person.getName() << " "
+		<< bday.getMonth() << "-"
+		<< bday.getDay() << "-"
+		<< bday.getYear() << endl;
+}
+void outputBreathFirst(Person& person)
+{
+
+}
+
+
 
 Person parsePersonIn(const string& line)
 {
@@ -52,16 +74,9 @@ Person parsePersonIn(const string& line)
 
 Birthdate parseBirthdate(const string& raw_birthday)
 {
-	//int dash_index = charIndexIn(raw_birthday, '-');
-	//string month = raw_birthday.substr(0, dash_index);
-	//string leftover = raw_birthday.substr(dash_index + 1, 7); // raw_birthday.length() - dash_index - 1);
-	//dash_index = charIndexIn(leftover, '-');
-	//string day = leftover.substr(0, dash_index);
-	//string year = leftover.substr(dash_index + 1, 4);
 	string month = raw_birthday.substr(0, 2);
 	string day   = raw_birthday.substr(3, 2);
 	string year  = raw_birthday.substr(6, 4);
-	
 	return Birthdate( stoi(month), stoi(day), stoi(year) );
 }
 
