@@ -17,7 +17,7 @@ namespace partydbtests
 		{
 			Birthdate test_date = Birthdate(11, 13, 1928);
 			string test_name = "Mickey";
-			Person mickey = Person(test_date, test_name);
+			Person mickey = Person(test_name, test_date);
 
 			Assert::AreEqual(test_date.getMonth(), mickey.getBirthday().getMonth());
 			Assert::AreEqual(test_date.getDay(), mickey.getBirthday().getDay());
