@@ -8,6 +8,7 @@ using namespace std;
 
 #include "BinarySearchTree.h"
 #include "Person.h"
+#include "ADT\Queue.h"
 
 // Prints people tree to cout
 void printPeople(Person& person);
@@ -27,7 +28,7 @@ Person parsePersonIn(const string& line);
 Birthdate parseBirthdate(const string& raw_birthday);
 
 // returns the index of a target character in the string
-int lastSpaceIndex(const string& str, const char& character);
+int lastIndexIn(const string& str, const char& character);
 
 // !!DANGER!!
 // global ofstreams that should only be 
@@ -35,67 +36,23 @@ int lastSpaceIndex(const string& str, const char& character);
 ofstream output_postorder;
 ofstream output_breadthfirst;
 
-// Generates random date values
-int genMonth() {
-	return rand() % 12 + 1;
-}
-int genDay(int month) {
-	int max_days;
-	switch (month) {
-	case 2:
-		max_days = 29; break;
-	case 4: case 6: case 9: case 11:
-		max_days = 30; break;
-	default:
-		max_days = 31; break;
-	}
-	return rand() % max_days + 1;
-}
-int genYear() {
-	return rand() % 105 + 1900;
-}
-
-#include "ADT\Queue.h";
 // Entry point for executable
 int main()
 {
-	/*Queue<string> nameQ;
-	ifstream names;
-	names.open("..\\NAMES.DIC");
-	string name;
-	while (getline(names, name)) {
-		nameQ.enqueue(name);
-	}
-	names.close();
-
-	ofstream gen;
-
-	int month;
-	int day;
-	gen.open("..\\generated.txt");
-	while (!nameQ.isEmpty()) {
-		month = genMonth();
-		day = genDay(month);
-
-		gen << nameQ.dequeue() << " ";
-		if (month < 10) { gen << "0"; }
-		gen << month << "-";
-		if (day < 10) { gen << "0"; }
-		gen << day << "-"
-			<< genYear() << endl;
-	}
-	gen.close();*/
-
-	cout << "Party DB" << endl;
+	cout << "<< PartyDB by Matthew Tso >>" << endl;
+	cout << "Reads name and birthday data from 'input.txt' in\nthe format of `[name] [mm]-[dd]-[yyyy]` per line, \nthen outputs the tree's data to two files: \none for post-order traversal and \nthe other for breadth-first traversal.";
+	cout << endl << endl;
 
 	BinarySearchTree<Person> people;
 
 	// Read in the values from the input data file
 	// Place them in the people tree
-	cout << "Reading input.txt file... " << endl;
+	cout << "Reading input.txt file containing " << endl;
 	ifstream data;
 	data.open("..\\input.txt");
 	string line;
+	getline(data, line);
+	cout << line << endl;
 	while (getline(data, line)) {
 		Person person = parsePersonIn(line);
 		people.insert(person);
@@ -155,7 +112,7 @@ void outputBreadthFirst(Person& person)
 
 Person parsePersonIn(const string& line)
 {
-	int space_index = lastSpaceIndex(line, ' ');
+	int space_index = lastIndexIn(line, ' ');
 	string name = line.substr(0, space_index);
 	string raw_birthday = line.substr(space_index + 1, line.length() - space_index - 1);
 
@@ -171,7 +128,7 @@ Birthdate parseBirthdate(const string& raw_birthday)
 	return Birthdate( stoi(month), stoi(day), stoi(year) );
 }
 
-int lastSpaceIndex(const string& str, const char& character)
+int lastIndexIn(const string& str, const char& character)
 {
 	int index = -1;
 	for (int i = 0; i < (int)str.length(); i++) {

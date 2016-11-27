@@ -69,6 +69,7 @@
     <ClInclude Include="ADT\Queue.h" />
     <ClInclude Include="BinarySearchTree.h" />
     <ClInclude Include="Birthdate.h" />
+    <ClInclude Include="Generator.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="TreeNode.h" />
   </ItemGroup>
