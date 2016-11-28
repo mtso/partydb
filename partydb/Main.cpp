@@ -73,12 +73,27 @@ int main()
 			if (manager.search(argument, result_by_name)) {
 				cout << result_by_name.getName() << "'s birthday is: " << result_by_name.getBirthday() << endl;
 			}
-			else if (manager.search(parseBirthdate(argument), result_by_birthday)) {
-				cout << "The first person who has that birthday is: " << result_by_birthday.getName() << endl;
-			} 
 			else {
-				cout << "Could not find an entry that matched: " << argument << endl;
+				cout << "Could not find an entry that matches the name: " << argument << endl;
 			}
+		}
+		else if (command == "update") {
+			Person<BY_NAME> new_person;
+			try {
+				new_person = Person<BY_NAME>(argument);\
+
+				if (manager.update(new_person.getName().getValue(), new_person.getBirthday())) {
+					cout << "Updated successfully" << endl;
+				}
+				else {
+					cout << "Could not find an entry that matched: " << argument << endl;
+				}
+			}
+			catch (...) {
+				cout << "Data does not match the format `[name] [mm]-[dd]-[yyyy]`: " << argument << endl;
+			}
+			
+			
 		}
 		else if (toupper(command[0]) == 'Q') {
 			should_continue = false;

@@ -50,7 +50,7 @@ protected:
 	/**
 	* Removes a node from the tree
 	*/
-	TreeNode<Data>* removeValue(const Data& target, TreeNode<Data>* parent);
+	TreeNode<Data>* removeValue(const Data& target, TreeNode<Data>* parent, bool& is_successful);
 	/**
 	 * Removes a node from the tree
 	 */
@@ -134,7 +134,7 @@ public:
 	 * Searches for a node with data that matches the target
 	 * and then removes the node.
 	 */
-	void remove(const Data& target);
+	bool remove(const Data& target);
 
 	/**
 	 * Recursively deletes nodes from the tree

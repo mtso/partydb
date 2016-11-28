@@ -52,7 +52,6 @@ public:
 	void outputBreadthFirstTo(const string& filepath);
 
 	bool search(const string& name, Person<BY_NAME>& result);
-	bool search(const Birthdate& birthday, Person<BY_BIRTHDAY>& result);
 	bool update(const string& name, const Birthdate& birthday);
 	bool remove(const string& name);
 	bool insert(const string& name, const Birthdate& birthday);

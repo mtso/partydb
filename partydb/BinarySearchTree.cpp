@@ -60,22 +60,26 @@ TreeNode<Data>* BinarySearchTree<Data>::find(const Data& target, TreeNode<Data>*
 }
 
 template <typename Data>
-TreeNode<Data>* BinarySearchTree<Data>::removeValue(const Data& target, TreeNode<Data>* to_remove)
+TreeNode<Data>* BinarySearchTree<Data>::removeValue(const Data& target, TreeNode<Data>* to_remove, bool& is_successful)
 {
 	// Return nullptr if not found
-	if (to_remove == nullptr) { return to_remove; }
+	if (to_remove == nullptr) { 
+		is_successful = false; 
+		return to_remove; 
+	}
 	
 	if (to_remove->getData() == target) {
 		// Found node
 		to_remove = removeNode(to_remove);
+		is_successful = true;
 	}
 	else if (to_remove->getData() > target) {
 		// Search left if the data of this node is greater than the target
-		TreeNode<Data>* new_left = removeValue(target, to_remove->getLeft());
+		TreeNode<Data>* new_left = removeValue(target, to_remove->getLeft(), is_successful);
 		to_remove->setLeft(new_left);
 	}
 	else {
-		TreeNode<Data>* new_right = removeValue(target, to_remove->getRight());
+		TreeNode<Data>* new_right = removeValue(target, to_remove->getRight(), is_successful);
 		to_remove->setRight(new_right);
 	}
 	return to_remove;
@@ -243,9 +247,11 @@ void BinarySearchTree<Data>::insert(const Data& new_data)
 }
 
 template <typename Data>
-void BinarySearchTree<Data>::remove(const Data& target)
+bool BinarySearchTree<Data>::remove(const Data& target)
 {
-	root = removeValue(target, root);
+	bool is_successful = false;
+	root = removeValue(target, root, is_successful);
+	return is_successful;
 }
 
 template <typename Data>

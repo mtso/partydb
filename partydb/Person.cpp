@@ -51,9 +51,6 @@ bool Person<S>::operator== (const Person& right) const
 
 // BY_BIRTHDAY should compare both fields because birthdays can repeat
 // whereas the rule for names is that names cannot repeat
-// BUT that would break the search algorithm because 
-// we want to be able to search for name by birthday,
-// so we wouldn't know the name ahead of time....
 template <>
 bool Person<BY_BIRTHDAY>::operator== (const Person& right) const
 {

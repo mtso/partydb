@@ -95,20 +95,45 @@ bool BirthdayManager::search(const string& name, Person<BY_NAME>& result)
 		return false;
 	}
 }
-bool BirthdayManager::search(const Birthdate& birthday, Person<BY_BIRTHDAY>& result)
-{
-	Person<BY_BIRTHDAY> target("", birthday);
-	try {
-		result = tree_by_bday.getData(target);
-		return true;
-	}
-	catch (BinarySearchTree<Person<BY_NAME>>::NotFoundException error) {
-		return false;
-	}
-}
 bool BirthdayManager::update(const string& name, const Birthdate& birthday)
 {
-	return false;
+	Person<BY_NAME> found_person_by_name;
+	Person<BY_BIRTHDAY> found_person_by_birthday;
+
+	try {
+		// First search name tree for name
+		found_person_by_name = tree_by_name.getData(Person<BY_NAME>(name, Birthdate()));
+		// Then search birthday tree using the same name
+		// and the birthday value returned from the name tree search
+		found_person_by_birthday = tree_by_bday.getData(Person<BY_BIRTHDAY>(name, found_person_by_name.getBirthday()));
+	}
+	catch (BinarySearchTree<Person<BY_BIRTHDAY>>::NotFoundException) {
+		return false;
+	}
+	catch (BinarySearchTree<Person<BY_NAME>>::NotFoundException) {
+		return false;
+	}
+
+	bool name_tree_removal_success = false;
+	bool bday_tree_removal_success = false;
+
+	name_tree_removal_success = tree_by_name.remove(found_person_by_name);
+	if (!name_tree_removal_success) { return false; }
+
+	bday_tree_removal_success = tree_by_bday.remove(found_person_by_birthday);
+	if (!bday_tree_removal_success) {
+		// If the bday-tree removal wasn't successful,
+		// Re-insert the removed entry into the name tree
+		tree_by_name.insert(found_person_by_name);
+		return false;
+	}
+
+	Person<BY_NAME> updated_name_person(name, birthday);
+	Person<BY_BIRTHDAY> updated_bday_person(name, birthday);
+	tree_by_name.insert(updated_name_person);
+	tree_by_bday.insert(updated_bday_person);
+
+	return true;
 }
 bool BirthdayManager::remove(const string& name)
 {
