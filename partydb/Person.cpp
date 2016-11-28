@@ -57,7 +57,7 @@ bool Person<S>::operator== (const Person& right) const
 template <>
 bool Person<BY_BIRTHDAY>::operator== (const Person& right) const
 {
-	return birthday == right.birthday; // && name == right.name;
+	return birthday == right.birthday && name == right.name;
 }
 
 template <>

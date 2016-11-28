@@ -131,7 +131,7 @@ public:
 	void insert(const Data& new_data);
 
 	/**
-	 * TODO: Searches for a node with data that matches the target
+	 * Searches for a node with data that matches the target
 	 * and then removes the node.
 	 */
 	void remove(const Data& target);

@@ -18,11 +18,30 @@ int firstOccurrenceOf(const char& character, const string& in_string)
 	return -1;
 }
 
+Birthdate parseBirthdate(const string& raw_birthday)
+{
+	string month_str = raw_birthday.substr(0, 2);
+	string day_str = raw_birthday.substr(3, 2);
+	string year_str = raw_birthday.substr(6, 4);
+
+	int month, day, year;
+	try {
+		month = stoi(month_str);
+		day = stoi(day_str);
+		year = stoi(year_str);
+	}
+	catch (std::invalid_argument error) {
+		return Birthdate();
+	}
+	return Birthdate(month, day, year);
+}
+
+
 // Entry point for executable
 int main()
 {
-	//// Output PartyDB description
-	//cout << "<< PartyDB by Matthew Tso >>" << endl;
+	// Output PartyDB description
+	cout << "<< PartyDB by Matthew Tso >>" << endl;
 	//cout << "Reads name and birthday data from 'input.txt' in\nthe format of `[name] [mm]-[dd]-[yyyy]` per line, \nthen outputs the collected data to two files: \none for post-order traversal and \nthe other for breadth-first traversal.";
 	//cout << endl << endl;
 
@@ -38,6 +57,7 @@ int main()
 	bool should_output = false;
 
 	Person<BY_NAME> result_by_name;
+	Person<BY_BIRTHDAY> result_by_birthday;
 	do {
 		cout << "> ";
 		getline(cin, input);
@@ -53,8 +73,11 @@ int main()
 			if (manager.search(argument, result_by_name)) {
 				cout << result_by_name.getName() << "'s birthday is: " << result_by_name.getBirthday() << endl;
 			}
+			else if (manager.search(parseBirthdate(argument), result_by_birthday)) {
+				cout << "The first person who has that birthday is: " << result_by_birthday.getName() << endl;
+			} 
 			else {
-				cout << "Could not find an entry for: " << argument << endl;
+				cout << "Could not find an entry that matched: " << argument << endl;
 			}
 		}
 		else if (toupper(command[0]) == 'Q') {

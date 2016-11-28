@@ -15,6 +15,14 @@ private:
 	int day;
 	int year;
 public:
+
+	class InvalidValuesException {
+	private:
+		string description = "Invalid numbers used to construct a birthday value.";
+	public:
+		string getDescription() const { return description; }
+	};
+
 	// Default Constructor should never be used to describe a real birthday.
 	Birthdate();
 	Birthdate(const int& new_month,

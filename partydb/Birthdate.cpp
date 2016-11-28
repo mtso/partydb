@@ -17,12 +17,12 @@ Birthdate::Birthdate(
 	const int& new_year)
 {
 	if (new_month > 12 || new_month < 1) {
-		throw "Invalid birthday";
+		throw InvalidValuesException();
 	}
 	month = new_month;
 
 	if (new_year > 9999 || new_year < 1) {
-		throw "Invalid birthday";
+		throw InvalidValuesException();
 	}
 	year = new_year;
 
@@ -46,7 +46,7 @@ Birthdate::Birthdate(
 		break;
 	}
 
-	if (new_day > max_days) { throw "Invalid birthday"; }
+	if (new_day > max_days || new_day < 1) { throw InvalidValuesException(); }
 	day = new_day;
 }
 
