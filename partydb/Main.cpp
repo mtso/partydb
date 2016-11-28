@@ -77,10 +77,10 @@ int main()
 				cout << "Could not find an entry that matches the name: " << argument << endl;
 			}
 		}
-		else if (command == "update") {
+		else if (command == "update" || command == "edit") {
 			Person<BY_NAME> new_person;
 			try {
-				new_person = Person<BY_NAME>(argument);\
+				new_person = Person<BY_NAME>(argument);
 
 				if (manager.update(new_person.getName().getValue(), new_person.getBirthday())) {
 					cout << "Updated successfully" << endl;
@@ -92,15 +92,37 @@ int main()
 			catch (...) {
 				cout << "Data does not match the format `[name] [mm]-[dd]-[yyyy]`: " << argument << endl;
 			}
-			
-			
 		}
-		else if (toupper(command[0]) == 'Q') {
+		else if (command == "remove" || command == "delete") {
+			if (manager.remove(argument)) {
+				cout << "Removed successfully." << endl;
+			}
+			else {
+				cout << "Could not find an entry that matches the name: " << argument << endl;
+			}
+		}
+		else if (command == "insert" || command == "add") {
+			if (manager.insert(argument)) {
+				cout << "Inserted successfully." << endl;
+			}
+			else {
+				cout << "Data does not match the format `[name] [mm]-[dd]-[yyyy]`: " << argument << endl;
+			}
+		}
+		else if (command == "quit" || command == "exit") {
 			should_continue = false;
 
 			cout << "Would you like to output the tree data? (Y/n)\n> ";
 			getline(cin, input);
 			if (toupper(input[0]) == 'Y') { should_output = true; }
+		}
+		else {
+			cout << "Unrecognized input, the available commands are:"
+					"\n    search/find [name]: Search for a birthday by name."
+					"\n    remove/delete [name]: Remove an entry by name."
+					"\n    insert/add [name] [mm]-[dd]-[yyyy]: Add a new entry."
+					"\n    update/edit [name] [mm]-[dd]-[yyyy]: Update an existing entry."
+					"\n    quit/exit: Terminate the application." << endl;
 		}
 
 	} while (should_continue);

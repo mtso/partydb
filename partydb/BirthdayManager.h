@@ -54,7 +54,7 @@ public:
 	bool search(const string& name, Person<BY_NAME>& result);
 	bool update(const string& name, const Birthdate& birthday);
 	bool remove(const string& name);
-	bool insert(const string& name, const Birthdate& birthday);
+	bool insert(const string& raw_input);
 
 	static BinarySearchTree<Person<BY_NAME>>& getNameTree();
 	static BinarySearchTree<Person<BY_BIRTHDAY>>& getBdayTree();

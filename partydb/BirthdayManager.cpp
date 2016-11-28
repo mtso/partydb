@@ -43,9 +43,6 @@ void BirthdayManager::importDataFrom(const string& filepath, ostream& to_output)
 
 	input_file.open(filepath);
 
-	// Ignore the first line containing metadata information.
-	getline(input_file, line);
-
 	// Read input data line-by-line
 	Person<BY_BIRTHDAY> person;
 	while (getline(input_file, line)) {
@@ -137,9 +134,36 @@ bool BirthdayManager::update(const string& name, const Birthdate& birthday)
 }
 bool BirthdayManager::remove(const string& name)
 {
-	return false;
+	Person<BY_NAME> found_person_by_name = tree_by_name.getData(Person<BY_NAME>(name, Birthdate()));
+	bool name_tree_removal_success = false;
+	bool bday_tree_removal_success = false;
+
+	name_tree_removal_success = tree_by_name.remove(found_person_by_name);
+	if (!name_tree_removal_success) { return false; }
+
+	bday_tree_removal_success = tree_by_bday.remove(Person<BY_BIRTHDAY>(name, found_person_by_name.getBirthday()));
+	if (!bday_tree_removal_success) {
+		// If the bday-tree removal wasn't successful,
+		// Re-insert the removed entry into the name tree
+		tree_by_name.insert(found_person_by_name);
+		return false;
+	}
+	else {
+		return true;
+	}
 }
-bool BirthdayManager::insert(const string& name, const Birthdate& birthday)
+bool BirthdayManager::insert(const string& raw_input)
 {
-	return false;
+	try {
+		Person<BY_BIRTHDAY> person_by_birthday(raw_input);
+		Person<BY_NAME> person_by_name(raw_input);
+
+		tree_by_bday.insert(person_by_birthday);
+		tree_by_name.insert(person_by_name);
+		return true;
+	}
+	catch (...) {
+		return false;
+	}
+
 }
