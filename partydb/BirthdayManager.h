@@ -47,7 +47,7 @@ private:
 	static ofstream stream_breadthfirst;
 
 public:
-	void importDataFrom(const string& filepath, ostream& to_output);
+	int importDataFrom(const string& filepath);
 	void outputPostorderTo(const string& filepath);
 	void outputBreadthFirstTo(const string& filepath);
 

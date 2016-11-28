@@ -72,7 +72,7 @@
     <ClInclude Include="BirthdayManager.h" />
     <ClInclude Include="Generator.h" />
     <ClInclude Include="Name.h" />
-    <ClInclude Include="OrderStrategy.h" />
+    <ClInclude Include="OrderingStrategy.h" />
     <ClInclude Include="Person.h" />
     <ClInclude Include="TreeNode.h" />
   </ItemGroup>

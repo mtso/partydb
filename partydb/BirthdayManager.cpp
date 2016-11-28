@@ -36,7 +36,7 @@ ofstream& BirthdayManager::getBreadthFirstStream()
 	return stream_breadthfirst;
 }
 
-void BirthdayManager::importDataFrom(const string& filepath, ostream& to_output)
+int BirthdayManager::importDataFrom(const string& filepath)
 {
 	ifstream input_file;
 	string line;
@@ -65,8 +65,7 @@ void BirthdayManager::importDataFrom(const string& filepath, ostream& to_output)
 	// using in-order traversal, which scrambles the name order;
 	// otherwise, it will take a long time....
 	tree_by_bday.traverseInorder(addToNameSortedTree);
-
-	to_output << "Successfully read " << tree_by_name.getNodeCount() << " entries." << endl;
+	return tree_by_name.getNodeCount();
 }
 void BirthdayManager::outputPostorderTo(const string& filepath)
 {

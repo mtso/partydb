@@ -7,7 +7,7 @@
 
 #include "Birthdate.h"
 #include "Name.h"
-#include "OrderStrategy.h"
+#include "OrderingStrategy.h"
 
 template <int S>
 class Person

@@ -42,10 +42,10 @@
     <ClInclude Include="Name.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OrderStrategy.h">
+    <ClInclude Include="BirthdayManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BirthdayManager.h">
+    <ClInclude Include="OrderingStrategy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
