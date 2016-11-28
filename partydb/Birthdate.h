@@ -5,6 +5,9 @@
 #ifndef PARTYDB_BIRTHDATE_H
 #define PARTYDB_BIRTHDATE_H
 
+#include <iostream>
+using namespace std;
+
 class Birthdate
 {
 private:
@@ -24,5 +27,7 @@ public:
 
 	bool operator== (const Birthdate& right) const;
 	bool operator>  (const Birthdate& right) const;
+
+	friend ostream& operator<< (ostream& output, const Birthdate& bday);
 };
 #endif

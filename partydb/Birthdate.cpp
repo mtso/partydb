@@ -80,3 +80,13 @@ bool Birthdate::operator> (const Birthdate& right) const
 	}
 	return year > right.year;
 }
+
+ostream& operator<< (ostream& output, const Birthdate& birthdate)
+{
+	if (birthdate.month < 10) { output << "0"; }
+	output << birthdate.month << "-";
+	if (birthdate.day < 10) { output << "0"; }
+	output << birthdate.day << "-";
+	output << birthdate.year;
+	return output;
+}

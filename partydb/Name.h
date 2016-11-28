@@ -21,6 +21,8 @@ public:
 
 	bool operator== (const Name& right) const;
 	bool operator> (const Name& right) const;
+
+	friend ostream& operator<< (ostream& output, const Name& name);
 };
 
 #endif

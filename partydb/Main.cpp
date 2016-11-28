@@ -6,114 +6,72 @@
 #include <fstream>
 using namespace std;
 
-#include "BinarySearchTree.h"
-#include "Person.h"
-#include "ADT\Queue.h"
+#include "BirthdayManager.h"
 
-// outputs tree to postorder file
-template <int S>
-void outputPostorder(Person<S>& person);
-
-// outputs tree to breadthfirst file
-template <int S>
-void outputBreadthFirst(Person<S>& person);
-
-
-// !!DANGER!!
-// global ofstreams that should only be 
-// used in the output functions
-ofstream output_postorder;
-ofstream output_breadthfirst;
-
-// !!DANGER!!
-// global variable name-sorted tree should only be used for traversal 
-BinarySearchTree<Person<BY_NAME>> people_name;
-
-void addToNameSortedTree(Person<BY_BIRTHDAY>& person_bday) {
-	people_name.insert(Person<BY_NAME>(person_bday.getName().getValue(), person_bday.getBirthday()));
+int firstOccurrenceOf(const char& character, const string& in_string)
+{
+	for (int i = 0; i < (int)in_string.length(); i++) {
+		if (in_string[i] == character) {
+			return i;
+		}
+	}
+	return -1;
 }
 
 // Entry point for executable
 int main()
 {
-	// Output PartyDB description
-	cout << "<< PartyDB by Matthew Tso >>" << endl;
-	cout << "Reads name and birthday data from 'input.txt' in\nthe format of `[name] [mm]-[dd]-[yyyy]` per line, \nthen outputs the collected data to two files: \none for post-order traversal and \nthe other for breadth-first traversal.";
-	cout << endl << endl;
+	//// Output PartyDB description
+	//cout << "<< PartyDB by Matthew Tso >>" << endl;
+	//cout << "Reads name and birthday data from 'input.txt' in\nthe format of `[name] [mm]-[dd]-[yyyy]` per line, \nthen outputs the collected data to two files: \none for post-order traversal and \nthe other for breadth-first traversal.";
+	//cout << endl << endl;
 
-	BinarySearchTree<Person<BY_BIRTHDAY>> people_bday;
+	BirthdayManager manager;
+	manager.importDataFrom("..\\input.txt", cout);
 
-	ifstream data;
-	string line;
+	string input;
+	string command;
+	string argument;
+	int argument_length;
+	int space_index;
+	bool should_continue = true;
+	bool should_output = false;
 
-	// Read in the values from the input data file
-	// Place them in the people tree
-	cout << "Reading input.txt file containing " << endl;
-	data.open("..\\input.txt");
+	Person<BY_NAME> result_by_name;
+	do {
+		cout << "> ";
+		getline(cin, input);
 
-	getline(data, line);
-	cout << line << endl;
+		space_index = firstOccurrenceOf(' ', input);
+		argument_length = input.length() - space_index - 1;
 
-	int iter = 0;
-	Person<BY_BIRTHDAY> person;
-	while (getline(data, line)) {
-		person = Person<BY_BIRTHDAY>(line);
-		if (person.getName().getValue().length() < 1) { continue; }
+		command = input.substr(0, space_index);
+		argument = input.substr(space_index + 1, argument_length);
 
-		people_bday.insert(person);
+		if (command == "search" || command == "find") {
 
-		//cout << "\r                                \r"; // This needs to be longer than the longest name
-		//cout << person.getName().getValue();
+			if (manager.search(argument, result_by_name)) {
+				cout << result_by_name.getName() << "'s birthday is: " << result_by_name.getBirthday() << endl;
+			}
+			else {
+				cout << "Could not find an entry for: " << argument << endl;
+			}
+		}
+		else if (toupper(command[0]) == 'Q') {
+			should_continue = false;
+
+			cout << "Would you like to output the tree data? (Y/n)\n> ";
+			getline(cin, input);
+			if (toupper(input[0]) == 'Y') { should_output = true; }
+		}
+
+	} while (should_continue);
+
+	if (should_output) {
+		manager.outputPostorderTo("..\\output_postorder.txt");
+		manager.outputBreadthFirstTo("..\\output_breadthfirst.txt");
 	}
-	data.close();
-	cout << "\r                                \r";
-	cout << "Success." << endl;
-
-	// Since our BST is not self-balancing,
-	// and we have over 20000+ data entries,
-	// we need to populate the tree sorted by name
-	// using data from the tree sorted by birthday;
-	// otherwise, it will take a long time....
-	people_bday.traverseInorder(addToNameSortedTree);
-
-	// Traverse the bday tree and output to post-order file
-	cout << "Outputting postorder to 'output_postorder.txt'" << endl;
-	output_postorder.open("..\\output_postorder.txt");
-	people_bday.traversePostorder(outputPostorder<BY_BIRTHDAY>);
-	output_postorder.close();
-
-	// Traverse the name tree and output to breadth-first file
-	cout << "Outputting breadth-first to 'output_breadthfirst.txt'" << endl;
-	output_breadthfirst.open("..\\output_breadthfirst.txt");
-	people_name.traverseBreadth(outputBreadthFirst<BY_NAME>);
-	output_breadthfirst.close();
 
 	system("pause");
 	return 0;
-}
-
-template <int S>
-void outputPostorder(Person<S>& person)
-{
-	Birthdate bday = person.getBirthday();
-	output_postorder << person.getName().getValue() << " ";
-
-	if (bday.getMonth() < 10) { output_postorder << "0"; }
-	output_postorder << bday.getMonth() << "-";
-	if (bday.getDay() < 10) { output_postorder << "0"; }
-	output_postorder << bday.getDay() << "-";
-	output_postorder << bday.getYear() << endl;
-}
-
-template <int S>
-void outputBreadthFirst(Person<S>& person)
-{
-	Birthdate bday = person.getBirthday();
-	output_breadthfirst << person.getName().getValue() << " ";
-
-	if (bday.getMonth() < 10) { output_breadthfirst << "0"; }
-	output_breadthfirst << bday.getMonth() << "-";
-	if (bday.getDay() < 10) { output_breadthfirst << "0"; }
-	output_breadthfirst << bday.getDay() << "-";
-	output_breadthfirst << bday.getYear() << endl;
 }

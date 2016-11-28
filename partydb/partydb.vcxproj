@@ -69,6 +69,7 @@
     <ClInclude Include="ADT\Queue.h" />
     <ClInclude Include="BinarySearchTree.h" />
     <ClInclude Include="Birthdate.h" />
+    <ClInclude Include="BirthdayManager.h" />
     <ClInclude Include="Generator.h" />
     <ClInclude Include="Name.h" />
     <ClInclude Include="OrderStrategy.h" />
@@ -81,6 +82,7 @@
     <ClCompile Include="ADT\Queue.cpp" />
     <ClCompile Include="BinarySearchTree.cpp" />
     <ClCompile Include="Birthdate.cpp" />
+    <ClCompile Include="BirthdayManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Name.cpp" />
     <ClCompile Include="Person.cpp" />
